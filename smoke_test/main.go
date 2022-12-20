@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/hex"
 	"io"
 	"log"
 	"net"
@@ -38,6 +39,8 @@ func handleRequest(conn net.Conn) {
 	}
 
 	log.Printf("Received message of %d bytes\n", len)
+
+	log.Printf("Ingress packet:\n% s", hex.Dump(buf[:len]))
 
 	conn.Write(buf[:len])
 
