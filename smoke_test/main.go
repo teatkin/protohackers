@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"log"
 	"net"
 )
@@ -31,7 +32,9 @@ func handleRequest(conn net.Conn) {
 
 	len, err := conn.Read(buf)
 	if err != nil {
-		log.Fatalf("ERROR: Read: %v\n", err)
+		if err != io.EOF {
+			log.Fatalf("ERROR: Read: %v\n", err)
+		}
 	}
 
 	log.Printf("Received message of %d bytes\n", len)
